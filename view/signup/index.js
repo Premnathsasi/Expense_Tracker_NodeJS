@@ -19,11 +19,15 @@ async function onSubmit(e) {
         alert("Account Successfully Created");
       });
   } catch (err) {
-    msg.innerHTML = `<h5 style="color: white;">Something went wrong </h5>`;
+    if (err.response.data.error.name) {
+      msg.innerHTML = `<h5 style="color: white; text-align: center;">User Already Exist</h5>`;
+    } else {
+      msg.innerHTML = `<h5 style="color: white;">${err}</h5>`;
+    }
     setTimeout(() => {
       msg.remove();
     }, 4000);
-    console.log(err);
+    console.log(err.response.data.error.name);
   }
   signUp.reset();
 }
