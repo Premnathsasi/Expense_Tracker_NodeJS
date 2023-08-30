@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import classes from "./Login.module.css";
 
 const Login = () => {
-  const [isError, setError] = useState(false);
-  const [isUserExist, setUserExist] = useState(false);
+  const [isError, setError] = useState("");
+  const [errMsg, setErrMsg] = useState(false);
 
   const Navigate = useNavigate();
 
@@ -25,24 +25,27 @@ const Login = () => {
         .post("http://localhost:4000/user/login", obj)
         .then((res) => {
           console.log(res);
+          alert(res.data.data);
         });
     } catch (err) {
-      setError(true);
-      console.log(err);
+      setErrMsg(true);
+      console.log(err.response.data);
+      setError(err.response.data.data);
     }
     setTimeout(() => {
-      setError(false);
+      setErrMsg(false);
     }, 4000);
+
+    emailInput.current.value = "";
+    passwordInput.current.value = "";
   };
 
   return (
     <section className={classes.auth}>
       <div className={classes.main}>
         <h2>Sign In</h2>
-        {isError && (
-          <h4 style={{ textAlign: "center" }}>
-            {isUserExist ? "User already Exists" : "Something went wrong!"}
-          </h4>
+        {errMsg && (
+          <h4 style={{ textAlign: "center", color: "white" }}>{isError}</h4>
         )}
         <form onSubmit={submitHandler}>
           <div className={classes.control}>
