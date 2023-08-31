@@ -26,8 +26,11 @@ const SignUp = () => {
         .post("http://localhost:4000/user/signup", obj)
         .then((res) => {
           console.log(res);
+          alert(res.data.message);
+          Navigate("/");
         })
         .catch((err) => {
+          console.log(err);
           setError(true);
           if (err.response.data.error.name) {
             setError(true);
@@ -39,6 +42,7 @@ const SignUp = () => {
     }
     setTimeout(() => {
       setError(false);
+      setUserExist(true);
     }, 4000);
 
     nameInput.current.value = "";
@@ -51,7 +55,7 @@ const SignUp = () => {
       <div className={classes.main}>
         <h2>Sign Up</h2>
         {isError && (
-          <h4 style={{ textAlign: "center" }}>
+          <h4 style={{ textAlign: "center", color: "White" }}>
             {isUserExist ? "User already Exists" : "Something went wrong!"}
           </h4>
         )}
