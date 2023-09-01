@@ -26,6 +26,7 @@ const Login = () => {
         .then((res) => {
           console.log(res);
           alert(res.data.data);
+          Navigate("/expense");
         });
     } catch (err) {
       setErrMsg(true);

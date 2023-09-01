@@ -7,8 +7,7 @@
   min-height: 100vh;
   font-family: "Jost", sans-serif;
   background-color: #a6b4de;
-  background: url("https://img.freepik.com/free-photo/abstract-digital-grid-black-background_53876-97647.jpg?w=1060&t=st=1693487732~exp=1693488332~hmac=b104a67ed4ecb0757e16f76b7e3d50cc2c951a8d9573110f3ed5327e13a5db90")
-    no-repeat;
+  background: url("../../assets/login.jpg") no-repeat;
   background-size: cover;
 }
 
@@ -17,8 +16,8 @@
   height: 400px;
   overflow: hidden;
   border-radius: 12px;
-  background-color: #354053;
-  opacity: 0.8;
+  background-color: #333650;
+  opacity: 0.7;
 }
 
 .auth h2 {
@@ -71,7 +70,7 @@
 .toggle {
   margin-top: 1rem;
   background-color: #1e1e32;
-  color: #b8b8b8;
+  color: #c2c1c1;
   border: none;
   text-align: center;
   padding: 0.15rem 1.5rem;

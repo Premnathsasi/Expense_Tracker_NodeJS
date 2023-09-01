@@ -7,8 +7,7 @@
   min-height: 100vh;
   font-family: "Jost", sans-serif;
   background-color: #a6b4de;
-  background: url("https://img.freepik.com/free-vector/gradient-futuristic-background-with-spheres_23-2149110136.jpg?w=1060&t=st=1693405073~exp=1693405673~hmac=78645aa887a9869049efbc21a37a18272d0683ce2994f5cb5ef116cfea9d680c")
-    no-repeat;
+  background: url("../../assets/signup.jpg") no-repeat;
   background-size: cover;
 }
 
@@ -17,8 +16,8 @@
   height: 440px;
   overflow: hidden;
   border-radius: 12px;
-  background-color: #3c3656;
-  opacity: 0.8;
+  background-color: #221a3e;
+  opacity: 0.7;
 }
 
 .auth h2 {
