@@ -25,7 +25,9 @@ const Login = () => {
         .post("http://localhost:4000/user/login", obj)
         .then((res) => {
           console.log(res);
+          localStorage.setItem("token", res.data.token);
           alert(res.data.data);
+
           Navigate("/expense");
         });
     } catch (err) {

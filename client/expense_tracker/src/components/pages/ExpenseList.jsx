@@ -5,10 +5,12 @@ import classes from "./ExpenseList.module.css";
 import axios from "axios";
 
 const ExpenseList = (props) => {
+  const token = localStorage.getItem("token");
   const deleteHandler = async () => {
     try {
       const res = await axios.delete(
-        `http://localhost:4000/expense/deleteExpense/${props.item.id}`
+        `http://localhost:4000/expense/deleteExpense/${props.item.id}`,
+        { headers: { Authorization: token } }
       );
       props.onDelete(props.item);
     } catch (err) {

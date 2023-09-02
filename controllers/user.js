@@ -1,5 +1,10 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+const genereteToken = (id) => {
+  return jwt.sign({ id: id }, "788sd8787derygh7887g8h2325544asdaf");
+};
 
 exports.postSignUp = async (req, res, next) => {
   try {
@@ -27,17 +32,20 @@ exports.postSignUp = async (req, res, next) => {
 
 exports.postLogin = async (req, res, next) => {
   try {
+    let id;
     const { email, password } = req.body;
     const data = await User.findOne({ where: { email: email } }).then(
       (resu) => {
         if (!resu) {
           return res.status(404).json({ data: "User not found" });
         }
+        id = resu.id;
         bcrypt.compare(password, resu.password, (err, result) => {
           if (result) {
-            return res
-              .status(200)
-              .json({ data: "User Successfully logged in" });
+            return res.status(200).json({
+              data: "User Successfully logged in",
+              token: genereteToken(id),
+            });
           } else {
             return res.status(401).json({ data: "Incorrect Password" });
           }

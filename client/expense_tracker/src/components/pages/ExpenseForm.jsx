@@ -15,10 +15,15 @@ const ExpenseForm = () => {
   const descriptionRef = useRef();
   const typeRef = useRef();
 
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     const getList = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/expense/getexpense");
+        const res = await axios.get(
+          "http://localhost:4000/expense/getexpense",
+          { headers: { Authorization: token } }
+        );
         let newList = [];
         for (const i in res.data.data) {
           newList.unshift(res.data.data[i]);
@@ -40,7 +45,9 @@ const ExpenseForm = () => {
     };
     try {
       const data = await axios
-        .post("http://localhost:4000/expense/addexpense", updatedList)
+        .post("http://localhost:4000/expense/addexpense", updatedList, {
+          headers: { Authorization: token },
+        })
         .then((res) => {
           console.log(res);
           dispatch(expenseActions.addExpense({ expense: updatedList }));
