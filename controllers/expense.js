@@ -13,7 +13,7 @@ exports.addExpense = async (req, res, next) => {
         return res.status(201).json({ data });
       });
   } catch (err) {
-    return res.status(500).json({ error: err });
+    return res.status(500).json({ error: "An internal server error occurred" });
   }
 };
 
@@ -44,8 +44,6 @@ exports.getAllExpense = async (req, res, next) => {
       });
     });
   } catch (err) {
-    return res.status(404).json({
-      error: err,
-    });
+    return res.status(500).json({ error: "An internal server error occurred" });
   }
 };

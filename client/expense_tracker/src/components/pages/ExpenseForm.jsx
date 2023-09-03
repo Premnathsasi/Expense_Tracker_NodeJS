@@ -34,7 +34,7 @@ const ExpenseForm = () => {
       }
     };
     getList();
-  }, []);
+  }, [dispatch, token]);
 
   const submitHandler = async (e) => {
     e.preventDefault();

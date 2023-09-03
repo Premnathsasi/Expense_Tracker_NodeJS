@@ -2,10 +2,14 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from "../store/AuthSlice";
 
 import classes from "./Login.module.css";
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const [isError, setError] = useState("");
   const [errMsg, setErrMsg] = useState(false);
 
@@ -27,8 +31,8 @@ const Login = () => {
           console.log(res);
           localStorage.setItem("token", res.data.token);
           alert(res.data.data);
-
           Navigate("/expense");
+          dispatch(authActions.login());
         });
     } catch (err) {
       setErrMsg(true);
@@ -38,9 +42,6 @@ const Login = () => {
     setTimeout(() => {
       setErrMsg(false);
     }, 4000);
-
-    emailInput.current.value = "";
-    passwordInput.current.value = "";
   };
 
   return (

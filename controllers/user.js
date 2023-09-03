@@ -56,3 +56,12 @@ exports.postLogin = async (req, res, next) => {
     res.status(404).json({ data: "Something went wrong" });
   }
 };
+
+exports.getUser = async (req, res, next) => {
+  try {
+    const data = await User.findByPk(req.user.id);
+    return res.status(200).json({ data: data });
+  } catch (err) {
+    res.status(404).json({ err: err });
+  }
+};
