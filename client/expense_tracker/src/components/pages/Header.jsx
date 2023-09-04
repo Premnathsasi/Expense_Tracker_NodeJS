@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import classes from "./Header.module.css";
@@ -8,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const Header = () => {
+const Header = (props) => {
   useEffect(() => {
     async function getUsers() {
       const data = await axios.get("http://localhost:4000/user/getUser", {
@@ -76,12 +77,23 @@ const Header = () => {
       </div>
 
       <div className={classes.feature}>
-        {!ispremium && (
+        {!ispremium ? (
           <button className={classes.premium} onClick={handlePayment}>
             Buy Premium
           </button>
+        ) : (
+          <h5>
+            You are a Premium User{" "}
+            <button
+              onClick={() => {
+                Navigate("/leaderboard");
+              }}
+              className={classes.leaderboard}
+            >
+              Leaderboard
+            </button>
+          </h5>
         )}
-        {ispremium && <h5>You are a Premium User</h5>}
         <button className={classes.logout} onClick={logoutHandler}>
           Logout
         </button>

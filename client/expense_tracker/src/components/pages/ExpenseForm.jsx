@@ -49,8 +49,8 @@ const ExpenseForm = () => {
           headers: { Authorization: token },
         })
         .then((res) => {
-          console.log(res);
-          dispatch(expenseActions.addExpense({ expense: updatedList }));
+          console.log(res.data.data);
+          dispatch(expenseActions.addExpense({ expense: res.data.data }));
         });
     } catch (err) {
       console.log(err);
@@ -107,6 +107,7 @@ const ExpenseForm = () => {
           </div>
         </form>
       </div>
+      {expenseList.length > 0 && <h3 className={classes.expense}>Expenses</h3>}
       {newExpenseList}
     </section>
   );

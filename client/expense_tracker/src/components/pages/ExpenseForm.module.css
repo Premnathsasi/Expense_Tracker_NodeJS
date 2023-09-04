@@ -54,6 +54,13 @@
   background-color: #515190;
 }
 
+.expense {
+  text-align: center;
+  font-weight: 600;
+  padding: 25px 15px;
+  font-size: 2.2em;
+}
+
 @media (max-width: 720px) {
   .forms {
     flex-direction: column;

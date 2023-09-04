@@ -26,6 +26,7 @@
   padding: 7px 10px;
   border-radius: 3px;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .logout {
@@ -35,6 +36,7 @@
   border-radius: 3px;
   color: #fff;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .premium:hover {
@@ -45,7 +47,16 @@
   background-color: rgb(67, 121, 214);
 }
 
-@media (max-width: 396px) {
+.leaderboard {
+  cursor: pointer;
+  padding: 5px 10px;
+  background: #2c0052;
+  border: none;
+  color: #fff;
+  border-radius: 3px;
+}
+
+@media (max-width: 468px) {
   .navbar {
     flex-direction: column;
     justify-content: start;
