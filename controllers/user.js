@@ -12,7 +12,7 @@ exports.postSignUp = async (req, res, next) => {
     const saltRounds = 10;
     bcrypt.hash(password, saltRounds, async (err, hash) => {
       console.log(err);
-      await User.create({ name, email, password: hash })
+      await User.create({ name, email, password: hash, totalCost: 0 })
         .then((result) => {
           return res.status(201).json({
             message: "Account successfully created",
@@ -59,9 +59,24 @@ exports.postLogin = async (req, res, next) => {
 
 exports.getUser = async (req, res, next) => {
   try {
-    const data = await User.findByPk(req.user.id);
+    const data = await User.findByPk(req.user.id, {
+      attributes: ["isPremiumUser"],
+    });
     return res.status(200).json({ data: data });
   } catch (err) {
     res.status(404).json({ err: err });
+  }
+};
+
+exports.getAllUsers = async (req, res, next) => {
+  try {
+    const data = await User.findAll({
+      attributes: ["totalCost", "name", "id"],
+    }).then((result) => {
+      result.sort((a, b) => b.totalCost - a.totalCost);
+      return res.status(200).json({ data: result });
+    });
+  } catch (err) {
+    res.status(404).json({ error: err });
   }
 };

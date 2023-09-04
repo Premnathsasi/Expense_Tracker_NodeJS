@@ -7,20 +7,16 @@ import axios from "axios";
 import classes from "./LeaderBoard.module.css";
 
 const LeaderBoard = () => {
-  const token = localStorage.getItem("token");
   const userList = useSelector((state) => state.leaderboard.userList);
   const dispatch = useDispatch();
 
   useEffect(() => {
     async function getAllUser() {
       try {
-        const data = await axios.get(
-          "http://localhost:4000/premium/getleaderboard",
-          { headers: { Authorization: token } }
-        );
+        const data = await axios.get("http://localhost:4000/user/getalluser");
 
         let newList = [];
-        data.data.map((item) => {
+        data.data.data.map((item) => {
           newList.push(item);
         });
         console.log(newList);
@@ -59,7 +55,7 @@ const LeaderBoard = () => {
                 <tr key={item.id}>
                   <td>{index + 1}</td>
                   <td>{item.name}</td>
-                  <td>{!item.totalCost ? 0 : item.totalCost}</td>
+                  <td>{item.totalCost}</td>
                 </tr>
               ))}
             </tbody>
