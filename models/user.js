@@ -19,7 +19,7 @@ const User = sequelize.define("user", {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  totalCost: Sequelize.INTEGER,
+
   isPremiumUser: Sequelize.BOOLEAN,
 });
 
