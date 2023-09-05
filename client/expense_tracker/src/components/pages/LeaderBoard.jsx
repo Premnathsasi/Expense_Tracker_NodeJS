@@ -1,32 +1,10 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { leaderboardActions } from "../store/LeaderBoard";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 import classes from "./LeaderBoard.module.css";
 
 const LeaderBoard = () => {
   const userList = useSelector((state) => state.leaderboard.userList);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    async function getAllUser() {
-      try {
-        const data = await axios.get("http://localhost:4000/user/getalluser");
-
-        let newList = [];
-        data.data.data.map((item) => {
-          newList.push(item);
-        });
-        console.log(newList);
-        dispatch(leaderboardActions.addExpense({ userList: newList }));
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    getAllUser();
-  }, []);
 
   const Navigate = useNavigate();
   return (

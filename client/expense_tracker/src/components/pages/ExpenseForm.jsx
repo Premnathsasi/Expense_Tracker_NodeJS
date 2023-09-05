@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback, useState } from "react";
 import ExpenseList from "./ExpenseList";
 import axios from "axios";
 import { expenseActions } from "../store/ExpenseSlice";
@@ -10,6 +10,7 @@ import classes from "./ExpenseForm.module.css";
 
 const ExpenseForm = () => {
   const expenseList = useSelector((state) => state.expense.expense);
+  const [showExp, setShowExp] = useState(false);
   const dispatch = useDispatch();
   const amountRef = useRef();
   const descriptionRef = useRef();
@@ -17,23 +18,20 @@ const ExpenseForm = () => {
 
   const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    const getList = async () => {
-      try {
-        const res = await axios.get(
-          "http://localhost:4000/expense/getexpense",
-          { headers: { Authorization: token } }
-        );
-        let newList = [];
-        for (const i in res.data.data) {
-          newList.unshift(res.data.data[i]);
-        }
-        dispatch(expenseActions.getExpense({ expense: newList }));
-      } catch (err) {
-        console.log(err);
+  const getList = useCallback(async () => {
+    try {
+      const res = await axios.get("http://localhost:4000/expense/getexpense", {
+        headers: { Authorization: token },
+      });
+      let newList = [];
+      for (const i in res.data.data) {
+        newList.unshift(res.data.data[i]);
       }
-    };
-    getList();
+      dispatch(expenseActions.getExpense({ expense: newList }));
+      setShowExp(true);
+    } catch (err) {
+      console.log(err);
+    }
   }, [dispatch, token]);
 
   const submitHandler = async (e) => {
@@ -107,8 +105,30 @@ const ExpenseForm = () => {
           </div>
         </form>
       </div>
-      {expenseList.length > 0 && <h3 className={classes.expense}>Expenses</h3>}
-      {newExpenseList}
+      <div className={classes.show}>
+        {!showExp ? (
+          <button className={classes.showExpBtn} onClick={getList}>
+            Show Expense
+          </button>
+        ) : (
+          <button
+            className={classes.showExpBtn}
+            onClick={() => {
+              setShowExp(false);
+            }}
+          >
+            Hide Expense
+          </button>
+        )}
+      </div>
+      {showExp && (
+        <div>
+          {expenseList.length > 0 && (
+            <h3 className={classes.expense}>Expenses</h3>
+          )}
+          {newExpenseList}
+        </div>
+      )}
     </section>
   );
 };

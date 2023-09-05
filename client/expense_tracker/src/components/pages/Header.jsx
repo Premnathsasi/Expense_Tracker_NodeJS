@@ -6,10 +6,17 @@ import { authActions } from "../store/AuthSlice";
 import useRazorpay from "react-razorpay";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { leaderboardActions } from "../store/LeaderBoard";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Header = (props) => {
+  const token = localStorage.getItem("token");
+  const [ispremium, setPremium] = useState(false);
+  const [Razorpay] = useRazorpay();
+  const dispatch = useDispatch();
+  const Navigate = useNavigate();
+
   useEffect(() => {
     async function getUsers() {
       const data = await axios.get("http://localhost:4000/user/getUser", {
@@ -21,12 +28,6 @@ const Header = (props) => {
     }
     getUsers();
   }, []);
-
-  const token = localStorage.getItem("token");
-  const [ispremium, setPremium] = useState(false);
-  const [Razorpay] = useRazorpay();
-  const dispatch = useDispatch();
-  const Navigate = useNavigate();
 
   const handlePayment = async (e) => {
     const response = await axios.get(
@@ -64,6 +65,22 @@ const Header = (props) => {
     });
   };
 
+  const leaderboardHandler = async () => {
+    try {
+      const data = await axios.get("http://localhost:4000/user/getalluser");
+
+      let newList = [];
+      data.data.data.map((item) => {
+        newList.push(item);
+      });
+      Navigate("/leaderboard");
+      console.log(newList);
+      dispatch(leaderboardActions.addExpense({ userList: newList }));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const logoutHandler = () => {
     dispatch(authActions.logout());
     localStorage.removeItem("token");
@@ -85,9 +102,7 @@ const Header = (props) => {
           <h5>
             You are a Premium User{" "}
             <button
-              onClick={() => {
-                Navigate("/leaderboard");
-              }}
+              onClick={leaderboardHandler}
               className={classes.leaderboard}
             >
               Leaderboard
