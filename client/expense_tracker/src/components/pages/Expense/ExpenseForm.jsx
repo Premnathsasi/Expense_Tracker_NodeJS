@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useCallback, useState } from "react";
 import ExpenseList from "./ExpenseList";
 import axios from "axios";
-import { expenseActions } from "../store/ExpenseSlice";
+import { expenseActions } from "../../store/ExpenseSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import classes from "./ExpenseForm.module.css";
@@ -18,7 +18,7 @@ const ExpenseForm = () => {
 
   const token = localStorage.getItem("token");
 
-  const getList = useCallback(async () => {
+  const getList = async () => {
     try {
       const res = await axios.get("http://localhost:4000/expense/getexpense", {
         headers: { Authorization: token },
@@ -32,7 +32,7 @@ const ExpenseForm = () => {
     } catch (err) {
       console.log(err);
     }
-  }, [dispatch, token]);
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();

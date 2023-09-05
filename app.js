@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const userRoutes = require("./routes/user");
 const expenseRoutes = require("./routes/expense");
 const purchaseRoutes = require("./routes/purchase");
+const forgotPasswordRoutes = require("./routes/forgotPassword");
 
 const User = require("./models/user");
 const Expense = require("./models/expense");
@@ -21,6 +22,7 @@ dotenv.config({ path: "./.env" });
 app.use("/user", userRoutes);
 app.use("/expense", expenseRoutes);
 app.use("/purchase", purchaseRoutes);
+app.use("/password", forgotPasswordRoutes);
 
 User.hasMany(Expense);
 Expense.belongsTo(User);

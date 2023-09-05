@@ -60,11 +60,13 @@
   border: none;
   border-radius: 5%;
   padding: 0.5rem 2.5rem;
+  transition: 0.3s ease-in-out;
 }
 
 .actions button:hover {
   background-color: #414144;
   border-color: #2e213f;
+  transform: scale(1.1);
 }
 
 .toggle {
@@ -80,4 +82,15 @@
   color: #ffffff;
   text-decoration: none;
   cursor: pointer;
+}
+
+.forgotPassword {
+  text-align: center;
+  color: #d4d4d4;
+  margin-top: 15px;
+}
+
+.forgotPassword span {
+  cursor: pointer;
+  color: #93a5dc;
 }

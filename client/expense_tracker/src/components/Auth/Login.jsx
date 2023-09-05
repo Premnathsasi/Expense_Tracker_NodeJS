@@ -76,6 +76,10 @@ const Login = () => {
             <button>Sign In</button>
           </div>
         </form>
+        <p className={classes.forgotPassword}>
+          Forgot Password ?{" "}
+          <span onClick={() => Navigate("/forgotpassword")}>Click Here.</span>
+        </p>
         <div className={classes.toggle}>
           Don't have an Account ?{" "}
           <a

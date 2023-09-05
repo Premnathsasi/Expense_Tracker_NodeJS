@@ -5,9 +5,10 @@ import { useSelector } from "react-redux";
 
 import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/signUp";
-import ExpenseForm from "./components/pages/ExpenseForm";
+import ExpenseForm from "./components/pages/Expense/ExpenseForm";
 import Header from "./components/pages/Header";
 import LeaderBoard from "./components/pages/LeaderBoard";
+import ForgotPassword from "./components/pages/ForgotPassword";
 
 function App() {
   const auth = useSelector((state) => state.auth.isAuthenticate);
@@ -17,6 +18,7 @@ function App() {
       {auth && <Header />}
       <Routes>
         {!auth && <Route path="/" element={<Login />} />}
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/leaderboard" element={<LeaderBoard />} />
         <Route path="/signup" element={<SignUp />} />
         {auth && <Route path="/expense" element={<ExpenseForm />} />}
