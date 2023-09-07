@@ -1,6 +1,7 @@
 const Expense = require("../models/expense");
 const User = require("../models/user");
 const sequelize = require("../util/database");
+const s3service = require("../services/s3service");
 
 exports.addExpense = async (req, res, next) => {
   const t = await sequelize.transaction();
@@ -63,5 +64,27 @@ exports.getAllExpense = async (req, res, next) => {
     });
   } catch (err) {
     return res.status(500).json({ error: "An internal server error occurred" });
+  }
+};
+
+exports.downloadFile = async (req, res, next) => {
+  try {
+    const expense = await req.user.getExpenses();
+    console.log(expense);
+    const filename = `${req.user.name}/Expense${new Date().toLocaleString()}`;
+    const fileURL = await s3service.uploadToS3(
+      JSON.stringify(expense),
+      filename
+    );
+    if (fileURL) {
+      await req.user.createFilelink({ fileUrl: fileURL });
+      return res.status(200).json({ fileURL });
+    } else {
+      return res
+        .status(500)
+        .json({ error: "Internal server error", success: false });
+    }
+  } catch (err) {
+    return res.status(400).json({ error: err, success: false });
   }
 };

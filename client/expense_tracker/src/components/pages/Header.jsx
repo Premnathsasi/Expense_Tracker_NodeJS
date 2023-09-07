@@ -81,6 +81,23 @@ const Header = (props) => {
     }
   };
 
+  const downloadHandler = async () => {
+    try {
+      const data = await axios.get("http://localhost:4000/user/download", {
+        headers: { Authorization: token },
+      });
+      if (data.status === 200) {
+        const a = document.createElement("a");
+        a.href = data.data.fileURL;
+        a.download = "Expense.txt";
+        a.click();
+      }
+      Navigate("/downloadhistory");
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
   const logoutHandler = () => {
     dispatch(authActions.logout());
     localStorage.removeItem("token");
@@ -91,6 +108,11 @@ const Header = (props) => {
     <nav className={classes.navbar}>
       <div className={classes.title}>
         <h2>Expense Tracker</h2>
+        {ispremium && (
+          <button onClick={downloadHandler} className={classes.dbtn}>
+            Download
+          </button>
+        )}
       </div>
 
       <div className={classes.feature}>

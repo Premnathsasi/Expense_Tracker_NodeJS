@@ -80,3 +80,14 @@ exports.getAllUsers = async (req, res, next) => {
     res.status(404).json({ error: err });
   }
 };
+
+exports.getDownloadHistory = async (req, res, next) => {
+  try {
+    const data = await req.user.getFilelinks();
+    if (data) {
+      return res.status(200).json({ data });
+    }
+  } catch (err) {
+    return res.status(404).json({ error: err });
+  }
+};
