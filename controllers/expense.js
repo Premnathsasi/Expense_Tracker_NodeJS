@@ -57,11 +57,21 @@ exports.deleteExpense = async (req, res, next) => {
 
 exports.getAllExpense = async (req, res, next) => {
   try {
-    req.user.getExpenses().then((expense) => {
+    const page = +req.query.page;
+    const pageSize = +req.query.pageSize;
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = page * pageSize;
+    const data = await req.user.getExpenses();
+    if (data) {
+      const paginatedProducts = data.slice(startIndex, endIndex);
+      const totalPages = Math.ceil(data.length / pageSize);
       return res.status(200).json({
-        data: expense,
+        data: paginatedProducts,
+        totalPages,
       });
-    });
+    } else {
+      return res.status(400).json({ error: "No data found" });
+    }
   } catch (err) {
     return res.status(500).json({ error: "An internal server error occurred" });
   }

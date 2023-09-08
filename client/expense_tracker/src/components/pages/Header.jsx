@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { leaderboardActions } from "../store/LeaderBoard";
 import axios from "axios";
+import download from "../../assets/download.png";
 import { useEffect, useState } from "react";
 
 const Header = (props) => {
@@ -109,9 +110,14 @@ const Header = (props) => {
       <div className={classes.title}>
         <h2>Expense Tracker</h2>
         {ispremium && (
-          <button onClick={downloadHandler} className={classes.dbtn}>
-            Download
-          </button>
+          <div>
+            <span>Download</span>
+            <img
+              onClick={downloadHandler}
+              className={classes.dbtn}
+              src={download}
+            ></img>
+          </div>
         )}
       </div>
 

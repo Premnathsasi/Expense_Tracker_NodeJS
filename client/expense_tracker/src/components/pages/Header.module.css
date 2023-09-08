@@ -64,11 +64,9 @@
 }
 
 .dbtn {
-  background-color: rgb(58, 97, 58);
-  color: white;
-  padding: 0 15px;
-  border: none;
   cursor: pointer;
+  width: 45px;
+  margin-left: 5px;
 }
 
 @media (max-width: 662px) {

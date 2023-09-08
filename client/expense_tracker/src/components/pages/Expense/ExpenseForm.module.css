@@ -78,6 +78,35 @@
   padding: 15px;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 75px;
+}
+
+.pagination div {
+  margin-right: 5px;
+  display: flex;
+}
+
+.pagination span {
+  padding: 5px 10px;
+  border: 2px solid rgb(170, 168, 168);
+}
+
+.paginationBtn {
+  padding: 5px 10px;
+  margin: 5px;
+  border: none;
+  background-color: #515190;
+  color: #fcfcfc;
+}
+
+.disable {
+  display: none;
+}
+
 @media (max-width: 720px) {
   .forms {
     flex-direction: column;

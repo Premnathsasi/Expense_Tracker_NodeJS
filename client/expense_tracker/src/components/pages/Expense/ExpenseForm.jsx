@@ -9,8 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 import classes from "./ExpenseForm.module.css";
 
 const ExpenseForm = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [pageSize, setPageSize] = useState(2);
   const expenseList = useSelector((state) => state.expense.expense);
-  const [showExp, setShowExp] = useState(false);
   const dispatch = useDispatch();
   const amountRef = useRef();
   const descriptionRef = useRef();
@@ -18,19 +20,39 @@ const ExpenseForm = () => {
 
   const token = localStorage.getItem("token");
 
-  const getList = async () => {
+  const getList = async (page) => {
     try {
-      const res = await axios.get("http://localhost:4000/expense/getexpense", {
-        headers: { Authorization: token },
-      });
+      const res = await axios.get(
+        `http://localhost:4000/expense/getexpense?page=${page}&pageSize=${pageSize}`,
+        {
+          headers: { Authorization: token },
+        }
+      );
+      console.log(res);
       let newList = [];
       for (const i in res.data.data) {
-        newList.unshift(res.data.data[i]);
+        newList.push(res.data.data[i]);
       }
       dispatch(expenseActions.getExpense({ expense: newList }));
-      setShowExp(true);
+      setTotalPages(res.data.totalPages);
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getList(currentPage);
+  }, [currentPage, pageSize]);
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
     }
   };
 
@@ -105,30 +127,45 @@ const ExpenseForm = () => {
           </div>
         </form>
       </div>
-      <div className={classes.show}>
-        {!showExp ? (
-          <button className={classes.showExpBtn} onClick={getList}>
-            Show Expense
-          </button>
-        ) : (
-          <button
-            className={classes.showExpBtn}
-            onClick={() => {
-              setShowExp(false);
-            }}
-          >
-            Hide Expense
-          </button>
+
+      <div>
+        {expenseList.length > 0 && (
+          <h3 className={classes.expense}>Expenses</h3>
         )}
-      </div>
-      {showExp && (
-        <div>
-          {expenseList.length > 0 && (
-            <h3 className={classes.expense}>Expenses</h3>
-          )}
-          {newExpenseList}
+        {newExpenseList}
+        <div className={classes.pagination}>
+          <div>
+            <div>Rows per page:</div>
+            <select id="rowsize" onChange={(e) => setPageSize(e.target.value)}>
+              <option value="2">2</option>
+              <option value="4">4</option>
+              <option value="8">8</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+          <button
+            className={
+              currentPage === 1 ? classes.disable : classes.paginationBtn
+            }
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+          >
+            prev
+          </button>
+          <span>{currentPage}</span>
+          <button
+            className={
+              currentPage === totalPages
+                ? classes.disable
+                : classes.paginationBtn
+            }
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+          >
+            next
+          </button>
         </div>
-      )}
+      </div>
     </section>
   );
 };
