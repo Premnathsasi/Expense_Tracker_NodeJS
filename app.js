@@ -1,6 +1,12 @@
+const path = require("path");
+const fs = require("fs");
+
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv");
+// const dotenv = require("dotenv");
+const helmet = require("helmet");
+const compression = require("compression");
+const morgan = require("morgan");
 
 const userRoutes = require("./routes/user");
 const expenseRoutes = require("./routes/expense");
@@ -17,9 +23,16 @@ const sequelize = require("./util/database");
 
 const app = express();
 
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  { flags: "a" }
+);
+
+// dotenv.config({ path: "./.env" });
+app.use(helmet());
+app.use(morgan("combined", { stream: accessLogStream }));
 app.use(cors());
 app.use(express.json({ extended: false }));
-dotenv.config({ path: "./.env" });
 
 app.use("/user", userRoutes);
 app.use("/expense", expenseRoutes);
@@ -38,11 +51,8 @@ ForgotPassword.belongsTo(User);
 User.hasMany(FileLinks);
 FileLinks.belongsTo(User);
 
-sequelize
-  .sync()
-  // .sync({ force: true })
-  .then(() => {
-    app.listen(4000, () => {
-      console.log(`App is running at port 4000`);
-    });
+sequelize.sync().then(() => {
+  app.listen(process.env.PORT || 4000, () => {
+    console.log(`App is running at port 4000`);
   });
+});

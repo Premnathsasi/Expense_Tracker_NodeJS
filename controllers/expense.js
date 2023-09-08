@@ -57,7 +57,7 @@ exports.deleteExpense = async (req, res, next) => {
 
 exports.getAllExpense = async (req, res, next) => {
   try {
-    const page = +req.query.page;
+    const page = +req.query.page || 1;
     const pageSize = +req.query.pageSize;
     const startIndex = (page - 1) * pageSize;
     const endIndex = page * pageSize;

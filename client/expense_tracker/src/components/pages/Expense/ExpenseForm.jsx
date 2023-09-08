@@ -134,15 +134,6 @@ const ExpenseForm = () => {
         )}
         {newExpenseList}
         <div className={classes.pagination}>
-          <div>
-            <div>Rows per page:</div>
-            <select id="rowsize" onChange={(e) => setPageSize(e.target.value)}>
-              <option value="2">2</option>
-              <option value="4">4</option>
-              <option value="8">8</option>
-              <option value="10">10</option>
-            </select>
-          </div>
           <button
             className={
               currentPage === 1 ? classes.disable : classes.paginationBtn
@@ -164,6 +155,15 @@ const ExpenseForm = () => {
           >
             next
           </button>
+        </div>
+        <div className={classes.selectPageSize}>
+          <div>Rows per page:</div>
+          <select id="rowsize" onChange={(e) => setPageSize(e.target.value)}>
+            <option value="2">2</option>
+            <option value="4">4</option>
+            <option value="8">8</option>
+            <option value="10">10</option>
+          </select>
         </div>
       </div>
     </section>
