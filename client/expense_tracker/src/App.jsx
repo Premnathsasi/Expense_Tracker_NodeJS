@@ -4,7 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import Login from "./components/Auth/Login";
-import SignUp from "./components/Auth/signUp";
+import SignUp from "./components/Auth/SignUp";
 import ExpenseForm from "./components/pages/Expense/ExpenseForm";
 import Header from "./components/pages/Header";
 import LeaderBoard from "./components/pages/LeaderBoard";

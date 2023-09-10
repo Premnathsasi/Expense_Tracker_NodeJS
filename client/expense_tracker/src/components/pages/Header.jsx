@@ -68,7 +68,7 @@ const Header = (props) => {
 
   const leaderboardHandler = async () => {
     try {
-      const data = await axios.get("http://localhost :4000/user/getalluser");
+      const data = await axios.get("http://localhost:4000/user/getalluser");
 
       let newList = [];
       data.data.data.map((item) => {
@@ -84,7 +84,7 @@ const Header = (props) => {
 
   const downloadHandler = async () => {
     try {
-      const data = await axios.get("http://localhost :4000/user/download", {
+      const data = await axios.get("http://localhost:4000/user/download", {
         headers: { Authorization: token },
       });
       if (data.status === 200) {
