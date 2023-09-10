@@ -23,7 +23,7 @@ const ExpenseForm = () => {
   const getList = async (page) => {
     try {
       const res = await axios.get(
-        `http://localhost:4000/expense/getexpense?page=${page}&pageSize=${pageSize}`,
+        `http://16.170.221.251:4000/expense/getexpense?page=${page}&pageSize=${pageSize}`,
         {
           headers: { Authorization: token },
         }
@@ -65,7 +65,7 @@ const ExpenseForm = () => {
     };
     try {
       const data = await axios
-        .post("http://localhost:4000/expense/addexpense", updatedList, {
+        .post("http://16.170.221.251:4000/expense/addexpense", updatedList, {
           headers: { Authorization: token },
         })
         .then((res) => {

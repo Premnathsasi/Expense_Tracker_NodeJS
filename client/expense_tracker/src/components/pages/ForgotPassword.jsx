@@ -14,7 +14,7 @@ const ForgotPassword = () => {
         email: emailInput.current.value,
       };
       const data = await axios.post(
-        "http://localhost:4000/password/forgotpassword",
+        "http://16.170.221.251:4000/password/forgotpassword",
         forgotMail
       );
       if (data) {

@@ -23,7 +23,7 @@ const SignUp = () => {
     };
     try {
       const res = await axios
-        .post("http://localhost:4000/user/signup", obj)
+        .post("http://16.170.221.251:4000/user/signup", obj)
         .then((res) => {
           console.log(res);
           alert(res.data.message);

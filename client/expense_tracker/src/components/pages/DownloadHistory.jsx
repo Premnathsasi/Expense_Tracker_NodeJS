@@ -11,7 +11,7 @@ const DownloadHistory = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/user/downloadhistory", {
+      .get("http://16.170.221.251:4000/user/downloadhistory", {
         headers: { Authorization: token },
       })
       .then((res) => {
