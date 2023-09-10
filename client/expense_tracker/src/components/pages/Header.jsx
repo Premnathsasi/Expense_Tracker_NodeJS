@@ -20,7 +20,7 @@ const Header = (props) => {
 
   useEffect(() => {
     async function getUsers() {
-      const data = await axios.get("http://16.170.221.251:4000/user/getUser", {
+      const data = await axios.get("http://localhost:4000/user/getUser", {
         headers: { Authorization: token },
       });
       if (data.data.data.isPremiumUser) {
@@ -32,7 +32,7 @@ const Header = (props) => {
 
   const handlePayment = async (e) => {
     const response = await axios.get(
-      "http://16.170.221.251:4000/purchase/membership",
+      "http://localhost:4000/purchase/membership",
       { headers: { Authorization: token } }
     );
     console.log(response);
@@ -42,7 +42,7 @@ const Header = (props) => {
       order_id: response.data.order.id,
       handler: async function (res) {
         const data = await axios.post(
-          "http://16.170.221.251:4000/purchase/updateStatus",
+          "http://localhost:4000/purchase/updateStatus",
           {
             order_id: options.order_id,
             payment_id: res.razorpay_payment_id,
@@ -68,9 +68,7 @@ const Header = (props) => {
 
   const leaderboardHandler = async () => {
     try {
-      const data = await axios.get(
-        "http://16.170.221.251:4000/user/getalluser"
-      );
+      const data = await axios.get("http://localhost :4000/user/getalluser");
 
       let newList = [];
       data.data.data.map((item) => {
@@ -86,7 +84,7 @@ const Header = (props) => {
 
   const downloadHandler = async () => {
     try {
-      const data = await axios.get("http://16.170.221.251:4000/user/download", {
+      const data = await axios.get("http://localhost :4000/user/download", {
         headers: { Authorization: token },
       });
       if (data.status === 200) {

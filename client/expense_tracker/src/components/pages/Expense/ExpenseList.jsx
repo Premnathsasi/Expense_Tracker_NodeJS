@@ -9,7 +9,7 @@ const ExpenseList = (props) => {
   const deleteHandler = async () => {
     try {
       const res = await axios.delete(
-        `http://16.170.221.251:4000/expense/deleteExpense/${props.item.id}`,
+        `http://localhost:4000/expense/deleteExpense/${props.item.id}`,
         { headers: { Authorization: token } }
       );
       props.onDelete(props.item);
